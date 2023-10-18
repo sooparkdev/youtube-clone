@@ -1,0 +1,95 @@
+{
+  "kind": "youtube#videoListResponse",
+  "etag": "LW7T0joWJVuHIVtzlcrhjtT7xCs",
+  "items": [
+    {
+      "kind": "youtube#video",
+      "etag": "0bp2f8TQrqr6p58cSbnl3P3pcNw",
+      "id": "jimmEPMTft4",
+      "snippet": {
+        "publishedAt": "2023-10-07T04:00:01Z",
+        "channelId": "UCMki_UkHb4qSc0qyEcOHHJw",
+        "title": "[Light Jeans] Bunnyland Pop-Up Behind | NewJeans",
+        "description": "[Light Jeans] Bunnyland Pop-Up Behind | NewJeans\n\nPartial subtitles will be provided (TBD).\nWe apologize for the inconvenience.\n\nⓒ 2023 ADOR. All Rights Reserved.\n\nConnect with NewJeans\n\nPHONING https://phoning.onelink.me/KG15/n7452q87\nOFFICIAL YOUTUBE https://www.youtube.com/c/NewJeans_official\nOFFICIAL WEBSITE https://newjeans.kr\nOFFICIAL INSTAGRAM https://www.instagram.com/newjeans_official\nOFFICIAL TWITTER https://twitter.com/NewJeans_ADOR\nNewJeans TWITTER https://twitter.com/NewJeans_twt\nOFFICIAL TIKTOK https://www.tiktok.com/@newjeans_official\nOFFICIAL WEVERSE https://weverse.io/newjeansofficial\nOFFICIAL FACEBOOK https://www.facebook.com/official.newjeans\nOFFICIAL JAPAN TWITTER https://twitter.com/@NewJeans_jp\nOFFICIAL WEIBO  https://weibo.com/NewJeansADOR\nOFFICIAL BILIBILI https://space.bilibili.com/3493092783032940\n\n#NewJeans #뉴진스 #LightJeans #NewJeans_LightJeans #Time_to_NewJeans",
+        "thumbnails": {
+          "default": {
+            "url": "https://i.ytimg.com/vi/jimmEPMTft4/default.jpg",
+            "width": 120,
+            "height": 90
+          },
+          "medium": {
+            "url": "https://i.ytimg.com/vi/jimmEPMTft4/mqdefault.jpg",
+            "width": 320,
+            "height": 180
+          },
+          "high": {
+            "url": "https://i.ytimg.com/vi/jimmEPMTft4/hqdefault.jpg",
+            "width": 480,
+            "height": 360
+          },
+          "standard": {
+            "url": "https://i.ytimg.com/vi/jimmEPMTft4/sddefault.jpg",
+            "width": 640,
+            "height": 480
+          },
+          "maxres": {
+            "url": "https://i.ytimg.com/vi/jimmEPMTft4/maxresdefault.jpg",
+            "width": 1280,
+            "height": 720
+          }
+        },
+        "channelTitle": "NewJeans",
+        "tags": [
+          "NewJeans",
+          "뉴진스",
+          "민지",
+          "하니",
+          "다니엘",
+          "해린",
+          "혜인",
+          "뉴진스 민지",
+          "뉴진스 하니",
+          "뉴진스 다니엘",
+          "뉴진스 해린",
+          "뉴진스 혜인",
+          "MINJI",
+          "HANNI",
+          "HAERIN",
+          "HYEIN",
+          "NewJeans MINJI",
+          "NewJeans HANNI",
+          "NewJeans HAERIN",
+          "NewJeans HYEIN",
+          "DANIELLE",
+          "NewJeans DANIELLE"
+        ],
+        "categoryId": "10",
+        "liveBroadcastContent": "none",
+        "localized": {
+          "title": "[Light Jeans] Bunnyland Pop-Up Behind | NewJeans",
+          "description": "[Light Jeans] Bunnyland Pop-Up Behind | NewJeans\n\nPartial subtitles will be provided (TBD).\nWe apologize for the inconvenience.\n\nⓒ 2023 ADOR. All Rights Reserved.\n\nConnect with NewJeans\n\nPHONING https://phoning.onelink.me/KG15/n7452q87\nOFFICIAL YOUTUBE https://www.youtube.com/c/NewJeans_official\nOFFICIAL WEBSITE https://newjeans.kr\nOFFICIAL INSTAGRAM https://www.instagram.com/newjeans_official\nOFFICIAL TWITTER https://twitter.com/NewJeans_ADOR\nNewJeans TWITTER https://twitter.com/NewJeans_twt\nOFFICIAL TIKTOK https://www.tiktok.com/@newjeans_official\nOFFICIAL WEVERSE https://weverse.io/newjeansofficial\nOFFICIAL FACEBOOK https://www.facebook.com/official.newjeans\nOFFICIAL JAPAN TWITTER https://twitter.com/@NewJeans_jp\nOFFICIAL WEIBO  https://weibo.com/NewJeansADOR\nOFFICIAL BILIBILI https://space.bilibili.com/3493092783032940\n\n#NewJeans #뉴진스 #LightJeans #NewJeans_LightJeans #Time_to_NewJeans"
+        },
+        "defaultAudioLanguage": "ko"
+      },
+      "contentDetails": {
+        "duration": "PT9M4S",
+        "dimension": "2d",
+        "definition": "hd",
+        "caption": "true",
+        "licensedContent": true,
+        "contentRating": {},
+        "projection": "rectangular"
+      },
+      "statistics": {
+        "viewCount": "85199",
+        "likeCount": "10534",
+        "favoriteCount": "0",
+        "commentCount": "542"
+      }
+    }
+  ],
+  "pageInfo": {
+    "totalResults": 1,
+    "resultsPerPage": 1
+  }
+}

@@ -1,0 +1,63 @@
+.commentBody {
+     margin: 1em 0;
+     display: flex;
+     align-items: start;
+}
+
+.commentDetails {
+     margin: 0 1em;
+}
+
+.commentDetails span, p {
+     margin: 0;
+}
+
+.authorName {
+     font-weight: 600;
+}
+
+.publishedTime {
+     font-size: small;
+}
+
+.authorAvatar {
+     width: 50px;
+     height: 50px;
+     border-radius: 50%;
+}
+
+.commentReactions{
+     margin: 1em 0;
+     display: flex;
+     align-items: center;
+}
+
+.commentReactions .likeCount {
+     margin-right: 1em;
+     font-size: small;
+}
+
+.repliesExpandCollapseButton {
+     font-size: small;
+     font-weight: 600;
+     color: #065fd4;
+     border: none;
+     border-radius: 2em;
+     padding: .7em;
+     display: flex;
+     align-items: center;
+     gap: .5em;
+     background-color: transparent;
+ }
+ 
+.repliesExpandCollapseButton:hover {
+     background-color: hsl(214, 100%, 93%);
+}
+
+.thumbsIcon {
+     margin-right: .2em;
+ }
+ 
+ .thumbsIcon:hover {
+     color: #065fd4; 
+ }

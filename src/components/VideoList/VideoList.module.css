@@ -1,0 +1,51 @@
+.column {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  width: 1500px;
+  max-width: 100%;
+  margin: var(--search-header-height) auto 0.5em;
+  border: 2px solid pink;
+}
+
+/* Default to 1 column on smaller devices */
+.grid {
+  margin: var(--search-header-height) 0 0.5em;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1px;
+}
+
+/* 2 columns for slightly larger screens */
+@media (min-width: 530px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* 3 columns for even larger screens */
+@media (min-width: 840px) {
+  .grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* 4 columns for screens larger than 960px */
+@media (min-width: 1100px) {
+  .grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* 4 columns for screens larger than 960px */
+@media (min-width: 1400px) {
+  .grid {
+    grid-template-columns: repeat(5, 1fr);
+  }
+}
+
+@media (min-width: 1500px) {
+  .grid {
+    grid-template-columns: repeat(6, 1fr);
+  }
+}

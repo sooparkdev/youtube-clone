@@ -1,0 +1,164 @@
+.grid {
+  margin: 0.5em;
+}
+
+.column {
+  display: flex;
+  margin: 0.5em 0;
+  gap: 1em;
+  overflow: hidden;
+}
+
+.channelProfile {
+  display: flex;
+  align-items: center;
+  margin: 0.7em 0;
+}
+
+.videoDescription {
+  display: -webkit-box; /* Necessary for line-clamp to work */
+  -webkit-box-orient: vertical; /* Necessary for line-clamp to work */
+  overflow: hidden; /* Required to hide the excess content. */
+  text-overflow: ellipsis; /* This is often added, but is not always necessary if overflow is hidden. */
+}
+
+.thumbnailContainer {
+  position: relative;
+}
+
+.column .thumbnailContainer {
+  width: 480px;
+  height: 270px;
+  overflow: hidden;
+  border-radius: 0.5em;
+  flex-shrink: 0;
+  flex-grow: 0;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.grid .thumbnail {
+  border-radius: 0.5em;
+  width: 100%;
+  height: auto;
+}
+
+.column .thumbnail {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+}
+
+.duration {
+  position: absolute;
+  z-index: 999;
+  padding: 0 0.3em;
+  background-color: rgba(0, 0, 0, 0.85);
+  color: white;
+  font-weight: 600;
+  border-radius: 0.5em;
+}
+
+.grid .duration {
+  bottom: 7%;
+  right: 2%;
+  font-size: 14px;
+}
+
+.column .duration {
+  bottom: 2%;
+  right: 1%;
+  font-size: 18px;
+}
+
+.grid .videoMetaData {
+  margin: 0.5em 0;
+  display: flex;
+}
+
+.channelAvatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  overflow: hidden;
+  flex-shrink: 0;
+  margin-right: 0.5em;
+}
+
+.avatarImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.skeletonAvatarImage {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, #f0f0f0, #f8f8f8, #f0f0f0);
+  animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200px;
+  }
+  100% {
+    background-position: 200px;
+  }
+}
+
+.grid .videoTitle {
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-bottom: 0.2em;
+  display: -webkit-box; /* Necessary for line-clamp to work */
+  -webkit-box-orient: vertical; /* Necessary for line-clamp to work */
+  -webkit-line-clamp: 2;
+  overflow: hidden; /* Required to hide the excess content. */
+  text-overflow: ellipsis; /* This is often added, but is not always necessary if overflow is hidden. */
+}
+/*the -webkit- prefix means it's specific to webkit browsers (like Chrome and Safari). If we want maximum compatibility, 
+   we may want to look into polyfills or JavaScript-based solutions. But for many use cases, especially where we're targeting modern browsers, this should suffice.*/
+
+.additionalInfo {
+  display: flex;
+  gap: 0.3em;
+  align-items: center;
+}
+
+.channelName,
+.viewsCount,
+.publishDate,
+.videoDescription {
+  font-size: 0.7rem;
+  color: rgb(128, 128, 128);
+}
+
+.viewsCount,
+.publishDate {
+  text-wrap: nowrap;
+}
+
+.dottedCircle {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background-color: rgb(128, 128, 128);
+}
+
+@media (max-width: 900px) {
+  .column {
+    flex-direction: column;
+  }
+
+  .column .thumbnailContainer {
+    width: 100%;
+    padding-bottom: 56.25%;
+  }
+
+  .column .thumbnailContainer > img {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+}
