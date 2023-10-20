@@ -16,7 +16,7 @@ export const getSearchVideosConfig = (query, nextPageToken) => ({
 });
 
 // 특정 지역의 가장 인기 있는 동영상 목록 회수
-export const getMostPopularVideosConfig = (regionCode) => ({
+export const getMostPopularVideosConfig = (regionCode, nextPageToken) => ({
   method: "get",
   url: `${baseURL}/videos`,
   params: {
@@ -24,6 +24,7 @@ export const getMostPopularVideosConfig = (regionCode) => ({
     chart: "mostPopular",
     regionCode: regionCode,
     maxResults: 24,
+    ...(nextPageToken ? { pageToken: nextPageToken } : {}),
     key: apiKey,
   },
 });
@@ -78,7 +79,7 @@ export const getChannelsConfig = (channelIdOrIds) => {
 
 
 // 특정 동영상에 대한 댓글 스레드 회수
-export const getCommentThreadsConfig = (videoId) => ({
+export const getCommentThreadsConfig = (videoId, nextPageToken) => ({
   method: "get",
   url: `${baseURL}/commentThreads`,
   params: {
@@ -86,13 +87,14 @@ export const getCommentThreadsConfig = (videoId) => ({
     order: "relevance",
     textFormat: "plainText",
     videoId: videoId,
+    ...(nextPageToken ? { pageToken: nextPageToken } : {}),
     key: apiKey,
   },
 });
 
 
 // 특정 최상위 댓글에 달린 첫 10개의 응답 댓글 회수
-export const getCommentsConfig = (parentId) => ({
+export const getCommentsConfig = (parentId, nextPageToken) => ({
   method: "get",
   url: `${baseURL}/comments`,
   params: {
@@ -100,6 +102,7 @@ export const getCommentsConfig = (parentId) => ({
     maxResults: 10,
     parentId: parentId,
     textFormat: "plainText",
+    ...(nextPageToken ? { pageToken: nextPageToken } : {}),
     key: apiKey,
   },
 });

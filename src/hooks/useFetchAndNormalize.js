@@ -2,16 +2,16 @@ import { useState, useEffect, useMemo } from "react";
 import { useFetch } from "../hooks/useFetch";
 import { normalizeRawData } from "../utils/normalizeYoutubeRawData";
 
-export const useFetchAndNormalize = (configFunction, param) => {
-  const config = useMemo(() => {
-    if (!param) return null;
-    return configFunction(param);
-  }, [configFunction, param]);
-
-  const { rawData, error } = useFetch(config);
-  
+export const useFetchAndNormalize = (configFunction, criteria, fetchMore) => {
   const [loading, setLoading] = useState(true);
   const [results, setResults] = useState(null);
+
+  const config = useMemo(() => {
+    if (!criteria) return null;
+    return configFunction(criteria);
+  }, [configFunction, criteria]);
+
+  const { rawData, error } = useFetch(config);
 
   useEffect(() => {
     if (rawData?.kind && rawData?.items) {

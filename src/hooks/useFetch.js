@@ -1,19 +1,27 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import axios from "axios";
+import isEqual from "lodash/isEqual";
 
 export const useFetch = (config) => {
   const [rawData, setRawData] = useState(null);
   const [error, setError] = useState(null);
+  
+  // Using useRef to hold the previous value of config for comparison
+  const prevConfigRef = useRef();
+
 
   useEffect(() => {
-    if (!config) {
+    if (!config || isEqual(prevConfigRef.current, config)) {
       return; // this will exit the entire useEffect callback
-      // In javascript, if a function doesn't explicitly return a value, it returns 'undefined' by default.
-    }
+    } // In javascript, if a function doesn't explicitly return a value, it returns 'undefined' by default.
 
+    prevConfigRef.current = config; // Update the ref with the new config
+   
     const fetchData = async () => {
       try {
+        
         const response = await axios(config);
+        console.log("FETCH SUCCEED", response)
         setRawData(response.data);
       } catch (err) {
         setError(err);

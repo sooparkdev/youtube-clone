@@ -51,7 +51,7 @@
 
 .duration {
   position: absolute;
-  z-index: 999;
+  z-index: 88;
   padding: 0 0.3em;
   background-color: rgba(0, 0, 0, 0.85);
   color: white;
