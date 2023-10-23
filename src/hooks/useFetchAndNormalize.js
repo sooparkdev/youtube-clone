@@ -2,7 +2,11 @@ import { useState, useEffect, useMemo } from "react";
 import { useFetch } from "../hooks/useFetch";
 import { normalizeRawData } from "../utils/normalizeYoutubeRawData";
 
-export const useFetchAndNormalize = (configFunction, criteria, fetchMore) => {
+export default function useFetchAndNormalize(
+  configFunction,
+  criteria,
+  fetchMore
+) {
   const [loading, setLoading] = useState(true);
   const [results, setResults] = useState(null);
 
@@ -14,11 +18,19 @@ export const useFetchAndNormalize = (configFunction, criteria, fetchMore) => {
   const { rawData, error } = useFetch(config);
 
   useEffect(() => {
-    if (rawData?.kind && rawData?.items) {
+    if (fetchMore === true) {
+      setLoading(true);
+    }
+  }, [fetchMore]);
+
+  useEffect(() => {
+    if (rawData) {
       setResults(normalizeRawData(rawData.kind, rawData.items));
     }
-    setLoading(false);
+    if (rawData || error) {
+      setLoading(false);
+    }
   }, [rawData, error]);
 
   return { results, loading, error };
-};
+}

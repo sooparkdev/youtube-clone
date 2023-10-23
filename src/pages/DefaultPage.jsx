@@ -4,7 +4,7 @@ import mockMostPopularVideos from "../mock/mockMostPopularVideos.json";
 import { useFetch } from "../hooks/useFetch";
 import { normalizeRawData } from "../utils/normalizeYoutubeRawData";
 import { getMostPopularVideosConfig } from "../utils/getYoutubeApiConfigs";
-import { useFetchAndNormalize } from "../hooks/fetchAndTransform";
+import useFetchAndNormalize from "../hooks/useFetchAndNormalize";
 
 export default function DefaultPage() {
   // const config = getMostPopularVideosConfig();

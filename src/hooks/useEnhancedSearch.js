@@ -7,117 +7,117 @@ import {
   getVideoDetailsConfig,
   getChannelsConfig,
 } from "../utils/getYoutubeApiConfigs";
-import { useFetchAndNormalize } from "./usePaginatedFetchAndNormalize";
+import usePaginatedFetchAndNormalize from "./usePaginatedFetchAndNormalize";
+import useFetchAndNormalize from "./useFetchAndNormalize";
 import mockSearchResult from "../mock/mockSearchResult.json";
 import { normalizeRawData } from "../utils/normalizeYoutubeRawData";
 
 export default function useEnhancedSearch(query, fetchMore) {
-  const [fullData, setFullData] = useState(null);
+  const [fullVideoInfo, setFullVideoInfo] = useState(null);
 
-  console.log("Search hook");
+  const [intermediateSearchResults, setIntermediateSearchResults] = useState(null);
+  const [intermediateVideoResults, setIntermediateVideoResults] = useState(null);
+  const [intermediateChannelResults, setIntermediateChannelResults] = useState(null);
+
+  useEffect(() => {
+    setIntermediateChannelResults(null);
+    setIntermediateVideoResults(null);
+    setIntermediateChannelResults(null);
+  }, [fetchMore])
+
   const {
     results: searchResults,
     loading: searchLoading,
     error: searchError,
-  } = useFetchAndNormalize(getSearchVideosConfig, query, fetchMore);
+  } = usePaginatedFetchAndNormalize(getSearchVideosConfig, query, fetchMore);
 
   useEffect(() => {
     if (searchError) {
-      console.error(
-        "An error occured while getting search results ",
-        searchError
-      );
+      console.error("An error occured while getting search results ", searchError);
       return;
     }
     if (searchResults) {
-      setFullData(searchResults);
+      setIntermediateSearchResults(searchResults);
     }
   }, [searchResults, searchError]);
 
   const videoIds = useMemo(() => {
-    console.log("video id recomputed");
     return searchResults?.map((video) => video.videoId);
   }, [searchResults]);
 
-  console.log("Video hook");
 
   const {
     results: videoResults,
     loading: videoLoading,
     error: videoError,
-  } = useFetchAndNormalize(getVideoDetailsConfig, videoIds);
+  } = useFetchAndNormalize(getVideoDetailsConfig, videoIds, fetchMore);
 
   useEffect(() => {
     if (videoError) {
-      console.error(
-        "An error occured while getting video results ",
-        videoError
-      );
+      console.error("An error occured while getting video results ", videoError);
       return;
     }
     if (videoResults) {
-      setFullData((searchList) => {
-        return searchList.map((video) => {
-          const videoDetails = videoResults.find(
-            (v) => v.videoId === video.videoId
-          );
-          const { videoId, ...otherVideoDetails } = videoDetails; // Destructure to exclude videoId
-          return {
-            ...video,
-            ...otherVideoDetails, // Spread the rest of the properties excluding videoId
-          };
-        });
-      });
+      setIntermediateVideoResults(videoResults);
     }
   }, [videoResults, videoError]);
 
   const channelIds = useMemo(() => {
     if (!searchResults) return undefined;
 
-    console.log("channel id recomputed");
     return [...new Set(searchResults.map((video) => video.channelId))];
   }, [searchResults]);
 
-  console.log("Channel hook");
 
   const {
     results: channelResults,
     loading: channelLoading,
     error: channelError,
-  } = useFetchAndNormalize(getChannelsConfig, channelIds);
+  } = useFetchAndNormalize(getChannelsConfig, channelIds, fetchMore);
 
   useEffect(() => {
     if (channelError) {
-      console.error(
-        "An error occured while getting channel results ",
-        channelError
-      );
+      console.error("An error occured while getting channel results ", channelError);
       return;
     }
     if (channelResults) {
-      setFullData((searchList) => {
-        return searchList.map((video) => {
-          const channelDetails = channelResults.find(
-            (c) => c.channelId === video.channelId
-          );
-          const { channelId, ...otherChannelDetails } = channelDetails;
-          return {
-            ...video,
-            ...otherChannelDetails,
-          };
-        });
-      });
+      setIntermediateChannelResults(channelResults);
     }
   }, [channelResults, channelError]);
 
-  console.log("search loading ", searchLoading);
-  console.log("video loading ", videoLoading);
-  console.log("channel loading ", channelLoading);
+  useEffect(() => {
+    if (
+      intermediateSearchResults &&
+      intermediateVideoResults &&
+      intermediateChannelResults
+    ) {
+      const combinedData = intermediateSearchResults.map(video => {
+        const videoDetails = intermediateVideoResults.find(
+          v => v.videoId === video.videoId
+        );
+        const channelDetails = intermediateChannelResults.find(
+          c => c.channelId === video.channelId
+        );
+
+        const { videoId: _, ...otherVideoDetails } = videoDetails;
+        const { channelId: __, ...otherChannelDetails } = channelDetails;
+
+        return {
+          ...video,
+          ...otherVideoDetails,
+          ...otherChannelDetails,
+        };
+      });
+
+      setFullVideoInfo(combinedData);
+    }
+  }, [intermediateSearchResults, intermediateVideoResults, intermediateChannelResults]);
+
   const isLoading = searchLoading || videoLoading || channelLoading;
   const error = searchError || videoError || channelError;
 
   return {
-    fullData,
+    fullVideoInfo,
     isLoading,
     error,
   };
