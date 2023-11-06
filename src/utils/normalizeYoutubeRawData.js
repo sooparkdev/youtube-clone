@@ -18,7 +18,6 @@ function decodeHTMLEntities(text) {
 function brToNewline(input) {
   return input.replace(/<br\s*\/?>/gi, "\n");
 }
-
 const processTextContent = compose(brToNewline, decodeHTMLEntities);
 
 // =============
@@ -47,23 +46,29 @@ const transformSearchList = (rawItemList) => {
 const transformVideoList = (rawItemList) => {
   return rawItemList.map((item) => {
     const snippetDetails = item.snippet ? extractVideoDetails(item) : {};
+    const stats = item.statistics;
 
     return {
       ...snippetDetails,
       videoId: item.id,
       duration: formatDuration(item.contentDetails?.duration),
-      viewCount: formatNumberWithUnit(item.statistics?.viewCount),
-      likeCount: item.statistics?.likeCount,
+      viewCount: stats.viewCount
+        ? formatNumberWithUnit(stats.viewCount)
+        : undefined,
+      likeCount: stats.likeCount
+        ? formatNumberWithUnit(stats.likeCount)
+        : undefined,
     };
   });
 };
 
 // Comments transformer
 const processSingleComment = (comment) => ({
+  commentId: comment.id,
   commentText: processTextContent(comment.snippet.textDisplay),
   authorName: processTextContent(comment.snippet.authorDisplayName),
   authorProfileImg: comment.snippet.authorProfileImageUrl,
-  likeCount: comment.snippet.likeCount,
+  likeCount: formatNumberWithUnit(comment.snippet.likeCount),
   publishedAt: formatDateToTimeAgo(comment.snippet.publishedAt),
 });
 
@@ -75,10 +80,11 @@ const transformCommentThreadsList = (rawItemList) => {
     const replies = commentItem.replies?.comments.map(processSingleComment);
 
     return {
-      id: commentItem.id,
       ...topLevelComment,
-      totalReplyCount: commentItem.snippet.totalReplyCount,
-      ...(replies ? { replies } : {}),
+      totalReplyCount: formatNumberWithUnit(
+        commentItem.snippet.totalReplyCount
+      ),
+      replies: replies ?? undefined,
     };
   });
 };
@@ -92,7 +98,9 @@ const transformChannelResponse = (rawItemList) => {
   return rawItemList.map((item) => ({
     channelId: item.id,
     channelThumbnails: item.snippet.thumbnails,
-    subscriberCount: item.statistics.subscriberCount,
+    subscriberCount: item.statistics.subscriberCount
+      ? formatNumberWithUnit(item.statistics.subscriberCount)
+      : undefined,
     hiddenSubscriberCount: item.statistics.hiddenSubscriberCount,
   }));
 };

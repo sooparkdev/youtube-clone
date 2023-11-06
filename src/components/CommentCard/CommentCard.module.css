@@ -1,0 +1,48 @@
+.commentBody {
+  margin: 1em 0;
+  display: flex;
+  align-items: start;
+}
+
+.authorAvatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+
+.commentDetails {
+  margin: 0 1em;
+}
+
+.commentDetails span,
+.commentDetails p {
+  font-size: 16px;
+}
+
+.authorName {
+  font-weight: 600;
+}
+
+.publishedTime,
+.likeCount {
+  font-size: 12px;
+  color: var(--color-text-grey);
+}
+
+.likeCount {
+  margin-right: 20px;
+}
+
+.commentReactions {
+  margin: 1em 0;
+  display: flex;
+  align-items: center;
+}
+
+.thumbsIcon {
+  margin-right: 8px;
+}
+
+.thumbsIcon:hover {
+  color: var(--color-primary-blue);
+}

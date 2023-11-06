@@ -99,7 +99,6 @@ export const getCommentsConfig = (parentId, nextPageToken) => ({
   url: `${baseURL}/comments`,
   params: {
     part: "snippet",
-    maxResults: 10,
     parentId: parentId,
     textFormat: "plainText",
     ...(nextPageToken ? { pageToken: nextPageToken } : {}),

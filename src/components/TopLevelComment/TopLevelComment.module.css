@@ -1,0 +1,26 @@
+.repliesWrapper {
+  margin-left: 60px;
+}
+
+.replyActionBtn {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--color-primary-blue);
+  border-radius: var(--border-radius-x-large);
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  background-color: transparent;
+}
+
+.replyActionBtn:hover {
+  background-color: var(--hover-color-primary-blue);
+}
+
+.toggleRepliesBtn {
+  padding: 6px 18px 6px 10px;
+}
+
+.hidden {
+  display: none;
+}

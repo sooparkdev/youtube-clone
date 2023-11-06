@@ -24,9 +24,8 @@ export default function SearchHeader() {
       }
     };
 
-    window.addEventListener("resize", handleResize);
+    window.addEventListener("resize", handleResize, { passive: true });
 
-    // Cleanup the event listener on component unmount
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
@@ -36,7 +35,6 @@ export default function SearchHeader() {
     navigate(`/results?query=${inputValue}`);
   };
 
-  // 이 useEffect가 url을 통해 query를 directly 넣은 경우를 handle 해줌. browser가 backward forward support할 때 url 통해 하는 건데, 그것도 얘가 handle.
   useEffect(() => {
     if (location.search) {
       const queryParams = new URLSearchParams(location.search);
@@ -44,9 +42,7 @@ export default function SearchHeader() {
     } else {
       setSearchText("");
     }
-  }, [location.search]); //location.search doesn't actually change until it navigates. while the user is typing in the input, the url itself doesn't change.
-
-  //depending on the route (where we are), we either show the search text or nothing
+  }, [location.search]);
 
   return (
     <header className={styles.headerContainer}>

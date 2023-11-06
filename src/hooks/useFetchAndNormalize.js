@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect } from "react";
 import { useFetch } from "../hooks/useFetch";
 import { normalizeRawData } from "../utils/normalizeYoutubeRawData";
 
@@ -7,21 +7,24 @@ export default function useFetchAndNormalize(
   criteria,
   fetchMore
 ) {
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [results, setResults] = useState(null);
-
-  const config = useMemo(() => {
-    if (!criteria) return null;
-    return configFunction(criteria);
-  }, [configFunction, criteria]);
-
-  const { rawData, error } = useFetch(config);
+  const [config, setConfig] = useState(null);
 
   useEffect(() => {
-    if (fetchMore === true) {
+    if (fetchMore) {
       setLoading(true);
     }
   }, [fetchMore]);
+
+  useEffect(() => {
+    if (criteria) {
+      setLoading(true);
+      setConfig(configFunction(criteria));
+    }
+  }, [criteria]);
+
+  const { rawData, error } = useFetch(config);
 
   useEffect(() => {
     if (rawData) {

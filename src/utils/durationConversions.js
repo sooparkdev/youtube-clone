@@ -1,8 +1,11 @@
 export function formatDuration(durationString) {
+  if(durationString === "P0D") {
+    return durationString;
+  }
+
   const match = durationString.match(/P(\d+D)?T(\d+H)?(\d+M)?(\d+S)?/);
 
   if (!match) {
-     console.error("Invalid duration format");
      return undefined; 
   }
 

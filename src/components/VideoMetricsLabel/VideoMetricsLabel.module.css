@@ -1,0 +1,18 @@
+.wrapper {
+  display: flex;
+  align-items: center;
+  gap: 0.3em;
+}
+
+.wrapper p {
+  font-size: 1em;
+  color: var(--color-text-grey);
+  text-wrap: nowrap;
+}
+
+.dottedCircle {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background-color: var(--color-text-grey);
+}

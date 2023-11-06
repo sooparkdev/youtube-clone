@@ -24,7 +24,7 @@
 .brandLogo {
   width: 200px;
   position: absolute;
-  top: 20%;
+  top: 25%;
 }
 
 .searchInputBox {
@@ -36,11 +36,6 @@
 
 .searchInputBox:focus {
   outline: none;
-}
-
-.btn {
-  border: none;
-  cursor: pointer;
 }
 
 .btnSearch {
@@ -70,5 +65,9 @@
 @media (max-width: 900px) {
   .headerContainer form {
     width: 100%;
+  }
+
+  .brandLogo {
+    width: 150px;
   }
 }

@@ -1,0 +1,11 @@
+.wrapper {
+  display: inline-flex;
+  background-color: var(--brand-color-red);
+  color: white;
+  border-radius: var(--border-radius-x-small);
+  padding: 2px 4px;
+  align-items: center;
+  gap: 4px;
+  font-weight: 600;
+  width: 85px;
+}

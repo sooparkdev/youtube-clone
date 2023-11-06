@@ -1,7 +1,9 @@
-import formatDistanceToNowStrict from 'date-fns/formatDistanceToNowStrict';
-import ko from 'date-fns/locale/ko';
+import { format, register } from 'timeago.js';
+import koLocale from 'timeago.js/lib/lang/ko';
+
+register('ko', koLocale);
 
 export function formatDateToTimeAgo(dateStr) {
   const date = new Date(dateStr);
-  return formatDistanceToNowStrict(date, { addSuffix: true, locale: ko});
+  return format(date, 'ko');
 }

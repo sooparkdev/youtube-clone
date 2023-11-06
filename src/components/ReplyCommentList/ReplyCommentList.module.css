@@ -1,0 +1,18 @@
+.replyActionBtn {
+     font-size: 16px;
+     font-weight: 600;
+     color: var(--color-primary-blue);
+     border-radius: var(--border-radius-x-large);
+     display: flex;
+     align-items: center;
+     gap: 0.5em;
+     background-color: transparent;
+   }
+
+   .replyActionBtn:hover {
+     background-color: var(--hover-color-primary-blue);
+   }
+
+.loadMoreRepliesBtn {
+     padding: 6px 14px 6px 12px;
+   }

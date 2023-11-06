@@ -1,34 +1,54 @@
 import React from "react";
 import VideoList from "../components/VideoList";
-import mockMostPopularVideos from "../mock/mockMostPopularVideos.json";
-import { useFetch } from "../hooks/useFetch";
-import { normalizeRawData } from "../utils/normalizeYoutubeRawData";
-import { getMostPopularVideosConfig } from "../utils/getYoutubeApiConfigs";
-import useFetchAndNormalize from "../hooks/useFetchAndNormalize";
+import { useState, useEffect } from "react";
+import useInfiniteScroll from "../hooks/useInfiniteScroll";
+import useTrendPipeline from "../hooks/useTrendPipeline";
+import ErrorPage from "./ErrorPage";
+import NoResultsPage from "./NoResultsPage";
 
 export default function DefaultPage() {
-  // const config = getMostPopularVideosConfig();
-  // const { rawData, loading, error } = useFetch(config);
-  // const TrendingResults = normalizeRawData(rawData.kind, rawData);
+  const [fetchMore, setFetchMore] = useState(false);
+  const [totalResults, setTotalResults] = useState(null);
 
-  // if (loading) return <div>Loading...</div>;
-  // if (error) return <div>Error: {error.message}</div>;
-  const transformedData = normalizeRawData(
-   mockMostPopularVideos.kind,
-   mockMostPopularVideos.items
-  );
+  const { singlePageResults, loading, error } = useTrendPipeline(fetchMore);
 
-  // const {
-  //   results: trendingResults,
-  //   loading: trendLoading,
-  //   error: trendError,
-  // } = useFetchAndNormalize(getMostPopularVideosConfig, "KR");
+  useEffect(() => {
+    if (singlePageResults) {
+      setFetchMore(false);
+      setTotalResults((prev) => {
+        const seen = new Set();
+        const combinedData = [...(prev || []), ...singlePageResults];
+        return combinedData.filter((item) => {
+          const duplicate = seen.has(item.videoId);
+          seen.add(item.videoId);
+          return !duplicate;
+        });
+      });
+    }
+  }, [singlePageResults]);
 
+  useInfiniteScroll(totalResults, () => setFetchMore(true), loading);
+
+  if (error) {
+    return <ErrorPage />;
+  }
+
+  if (!error && !loading && totalResults?.length === 0) {
+    return (
+      <NoResultsPage
+        mainMessage="현재 트렌딩 중인 비디오가 없습니다"
+        description="나중에 다시 확인해주세요. 대신 검색을 이용해보세요!"
+      />
+    );
+  }
 
   return (
     <div>
-      {/* <VideoList videoList={trendingResults} layoutStyle={'grid'} /> */}
-      <VideoList videoList={transformedData} layoutStyle={"grid"} />
+      <VideoList
+        videoList={totalResults}
+        layoutStyle="portrait"
+        loading={loading}
+      />
     </div>
   );
 }
