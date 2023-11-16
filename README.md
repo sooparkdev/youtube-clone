@@ -24,7 +24,7 @@
 
 ## 데모 영상
 
-[![Video Thumbnail](/src/assets/demo-vid-preview.PNG)](https://www.awesomescreenshot.com/video/22508509?key=cec3d003f78b75c083a68587d70afaf3)
+[![Video Thumbnail](/docs/imgs/demo-vid-preview.PNG)](https://www.awesomescreenshot.com/video/22508509?key=cec3d003f78b75c083a68587d70afaf3)
 **위 미리보기 이미지를 클릭하면 데모 영상으로 이동합니다.** <br>
 **이 데모 영상은 스켈레톤 UI나 스피너가 로딩 과정에서 작동되는 걸 시연하기 위해 `느린 3G 환경`에서 녹화되었습니다.**
 
@@ -258,7 +258,7 @@
 
 ## 컴포넌트 구조도
 
-![컴포넌트 구조도](src/assets/component-arch.jpeg)
+![컴포넌트 구조도](docs/imgs/component-arch.jpeg)
 
 이 구조도는 본 프로젝트의 주요 컴포넌트와 그들의 계층 관계를 시각적으로 보여줍니다. 각 페이지 컴포넌트(`DefaultPage`, `SearchPage`, `VideoDetailsPage`)는 데이터 페칭과 상태 관리를 담당하는 추상화 레이어로써, 아래의 핵심 기능들을 수행합니다:
 
