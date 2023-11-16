@@ -1,8 +1,8 @@
 # Youtube Clone
 
 ## 개발 동기
+본 프로젝트는 YouTube의 핵심 기능들을 모방함으로써, 다양한 API에서 데이터를 효과적으로 수집하고 사용자 인터페이스에 통합하는 데 있어 개인적인 개발 능력을 향상시키려는 의도로 시작됐습니다. 그 과정에서 대규모 애플리케이션들이 데이터를 다양한 엔드포인트에 걸쳐 어떻게 분해하고 구조화하는지에 대한 복잡성을 탐구해보고자 했습니다. 또한, 비동기적으로 데이터를 가져오고 표시하는 다양한 전략을 실험해보며, 데이터 도착에 따른 콘텐츠의 점진적 렌더링이 효율성과 사용자 경험에 미치는 영향을 분석해보고자 했습니다.
 
-이 프로젝트를 하게 된 주된 이유는 YouTube와 같은 대규모 애플리케이션들이 어떻게 데이터를 다양한 엔드포인트에 걸쳐 분해하고 구조화하는지에 대한 복잡성을 탐구하는 것이었습니다. 이 과정에서 데이터를 가져오고 표시하는 다양한 전략을 실험해보며, 특히 비동기 데이터 흐름의 처리에 초점을 맞추었습니다. 다양한 API에서 데이터를 효과적으로 수집하고 사용자 인터페이스에 통합하는 방법을 배우며, 이러한 데이터가 도착함에 따라 점진적으로 콘텐츠를 렌더링하는 과정에서 발생하는 효율성과 사용자 경험의 영향을 깊이 분석해보고자 했습니다.
 
 ## 기술 스택
 
@@ -40,7 +40,7 @@
   </tr>
   <tr>
     <td>검색 쿼리를 기반으로 25개의 동영상 목록 회수</td>
-<td>https://youtube.googleapis.com/youtube/v3/<strong>search</strong></td>
+<td><strong>search</strong></td>
     <td>
       <strong>part</strong>: <code>snippet</code><br>
       <strong>type</strong>: video<br>
@@ -70,7 +70,7 @@
   </tr>
   <tr>
     <td>대한민국 지역에서 가장 인기 있는 25개 동영상 목록 회수</td>
-    <td class="url">https://youtube.googleapis.com/youtube/v3/<strong>videos</strong></td>
+    <td class="url"><strong>videos</strong></td>
     <td>
       <strong>part</strong>: <code>snippet, contentDetails, statistics</code><br>
       <strong>chart</strong>: mostPopular<br>
@@ -111,7 +111,7 @@
   </tr>
   <tr>
     <td>동영상 목록 또는 단일 동영상의 상세 정보 회수</td>
-    <td class="url">https://youtube.googleapis.com/youtube/v3/<strong>videos</strong></td>
+    <td class="url"><strong>videos</strong></td>
     <td>
       <strong>part</strong>:
       <ul>
@@ -151,7 +151,7 @@
   </tr>
   <tr>
     <td>채널 목록 또는 단일 채널의 상세 정보 회수</td>
-    <td class="url">https://youtube.googleapis.com/youtube/v3/<strong>channels</strong></td>
+    <td class="url"><strong>channels</strong></td>
     <td>
       <strong>part</strong>: <code>snippet, statistics</code><br>
       <strong>id</strong>: {채널 아이디}
@@ -176,7 +176,7 @@
   </tr>
   <tr>
     <td> 특정 동영상에 달린 첫 20개 댓글 스레드 회수</td>
-    <td class="url">https://youtube.googleapis.com/youtube/v3/<strong>commentThreads</strong></td>
+    <td class="url"><strong>commentThreads</strong></td>
     <td>
       <strong>part</strong>: <code>snippet, replies</code><br>
       <strong>order</strong>: relevance<br>
@@ -201,7 +201,7 @@
   </tr>
   <tr>
     <td>특정 최상위 댓글에 달린 첫 20개의 응답 댓글 회수</td>
-    <td class="url">https://youtube.googleapis.com/youtube/v3/<strong>comments</strong></td>
+    <td class="url"><strong>comments</strong></td>
     <td>
       <strong>part</strong>: <code>snippet</code><br>
       <strong>parentId</strong>: {최상위 댓글 아이디}<br>
@@ -229,7 +229,7 @@
 
 ## API 구조가 결정한 프로젝트 설계의 주요 지점들
 
-### 워터폴 페칭 방식에서의 UI 렌더링 전략: 점진적 대비 일괄적 접근
+### 워터폴 페칭 방식에서의 UI 렌더링 전략: 점진적 VS 일괄적 접근
 
 검색 결과 페이지(Search Page)는 사용자의 검색 요구를 충족시키기 위해 search 엔드포인트를 사용합니다. 반면, 기본 페이지(Default Page)와 비디오 상세 페이지(Video Details Page)는 각각 인기 동영상 목록과 개별 영상의 상세 정보를 제공하기 위해 videos 엔드포인트를 활용합니다. 그러나 각 엔드포인트가 제공하는 정보만으로는 비디오에 관한 충분한 세부사항을 사용자에게 제공하기 어렵기 때문에, 보다 상세한 정보를 얻기 위해서는 추가 엔드포인트로부터 데이터를 요청해야 합니다.
 
@@ -271,8 +271,6 @@
 ## YouTube v3 API 관련 참고 사항
 
 YouTube v3 API의 검색 엔드포인트는 가끔 다음 페이지 검색 결과에 중복된 비디오 검색 결과를 반환하는 문제가 발견되었습니다. 따라서, 이 프로젝트에서는 중복된 결과를 수동으로 걸러내어 고유한 비디오 목록을 제공하지만, 검색 결과를 스크롤하여 추가 로딩할 때마다, 추가로 UI에 보여지는 비디오 수가 항상 25개가 아닐 수 있으니 이 점 유의 바랍니다.
-
-YouTube API 키가 필요한 경우, 사용자가 이를 쉽게 설정할 수 있도록 README 파일에 해당 내용을 포함시키는 것이 좋습니다. 이를 위해 다음과 같은 단계를 추가할 수 있습니다:
 
 ## 시작하기
 
