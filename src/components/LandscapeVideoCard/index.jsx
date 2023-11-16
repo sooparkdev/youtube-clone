@@ -43,7 +43,7 @@ export default function LandscapeVideoCard({ video, loading }) {
   return (
     <div
       onClick={() =>
-        navigate(`/watch?v=${videoId}`, { state: { video: video } })
+        navigate(`/watch?v=${videoId}`, { state: { from: 'SearchPage', video: video } })
       }
       className={styles.wrapper}
     >

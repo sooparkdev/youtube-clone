@@ -1,21 +1,18 @@
-import {
-  getVideoDetailsConfig,
-} from "../utils/getYoutubeApiConfigs";
+import { getVideoDetailsConfig } from "../utils/getYoutubeApiConfigs";
 import useFetchAndNormalize from "./useFetchAndNormalize";
 import { useState, useEffect, useMemo } from "react";
 import { getChannelsConfig } from "../utils/getYoutubeApiConfigs";
 import { combineDatasets } from "../utils/dataCombiners";
 
-export default function useVideoDetailsPipeline(videoId, fetchMore) {
+export default function useVideoDetailsPipeline(
+  videoId,
+  shouldFetchChannelDetails,
+  channelInfo
+) {
   const [result, setResult] = useState(null);
   const [intermediateVideoResult, setIntermediateVideoResult] = useState(null);
   const [intermediateChannelResult, setIntermediateChannelResult] =
     useState(null);
-
-  useEffect(() => {
-    setIntermediateVideoResult(null);
-    setIntermediateChannelResult(null);
-  }, [fetchMore]);
 
   const {
     results: videoResult,
@@ -30,9 +27,9 @@ export default function useVideoDetailsPipeline(videoId, fetchMore) {
   }, [videoResult, videoError]);
 
   const channelId = useMemo(() => {
-    if (!videoResult) return undefined;
+    if (!videoResult || !shouldFetchChannelDetails) return undefined;
     return videoResult[0].channelId;
-  }, [videoResult]);
+  }, [videoResult, shouldFetchChannelDetails]);
 
   const {
     results: channelResult,
@@ -47,14 +44,14 @@ export default function useVideoDetailsPipeline(videoId, fetchMore) {
   }, [channelResult, channelError]);
 
   useEffect(() => {
-    if (intermediateVideoResult && intermediateChannelResult) {
+    if (intermediateVideoResult && (channelInfo || intermediateChannelResult)) {
       const combinedData = combineDatasets(
         intermediateVideoResult,
-        intermediateChannelResult
+        channelInfo || intermediateChannelResult
       );
       setResult(combinedData);
     }
-  }, [intermediateVideoResult, intermediateChannelResult]);
+  }, [intermediateVideoResult, intermediateChannelResult, channelInfo]);
 
   const loading = videoLoading || channelLoading;
   const error = videoError || channelError;

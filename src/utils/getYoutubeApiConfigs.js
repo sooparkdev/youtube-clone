@@ -1,7 +1,7 @@
 const baseURL = "https://youtube.googleapis.com/youtube/v3";
 const apiKey = process.env.REACT_APP_YOUTUBE_API_KEY;
 
-// 검색 쿼리를 기반으로 동영상 목록 회수
+// 검색 쿼리를 기반으로 25개의 동영상 목록
 export const getSearchVideosConfig = (query, nextPageToken) => ({
   method: "get",
   url: `${baseURL}/search`,
@@ -23,15 +23,14 @@ export const getMostPopularVideosConfig = (regionCode, nextPageToken) => ({
     part: "snippet,contentDetails,statistics",
     chart: "mostPopular",
     regionCode: regionCode,
-    maxResults: 24,
+    maxResults: 25,
     ...(nextPageToken ? { pageToken: nextPageToken } : {}),
     key: apiKey,
   },
 });
 
 
-/* 동영상 목록 또는 단일 동영상의 세부 정보 회수.
- 여러 동영상의 세부 정보 회수는 검색 결과 목록을 보충하기 위해 함께 사용 */
+// 대한민국 지역에서 가장 인기 있는 25개 동영상 목록 회수
 export const getVideoDetailsConfig = (videoIdOrIds) => {
   let ids;
   let parts;
@@ -56,8 +55,7 @@ export const getVideoDetailsConfig = (videoIdOrIds) => {
 };
 
 
-/* 채널 목록 또는 단일 채널의 세부 정보 회수.
- 여러 채널의 세부 정보 회수는 검색 결과 목록을 보충하기 위해 함께 사용 */
+// 채널 목록 또는 단일 채널의 상세 정보 회수
 export const getChannelsConfig = (channelIdOrIds) => {
   let ids;
   if (Array.isArray(channelIdOrIds)) {
@@ -78,7 +76,7 @@ export const getChannelsConfig = (channelIdOrIds) => {
 };
 
 
-// 특정 동영상에 대한 댓글 스레드 회수
+// 특정 동영상에 달린 첫 20개 댓글 스레드 회수
 export const getCommentThreadsConfig = (videoId, nextPageToken) => ({
   method: "get",
   url: `${baseURL}/commentThreads`,
@@ -93,7 +91,7 @@ export const getCommentThreadsConfig = (videoId, nextPageToken) => ({
 });
 
 
-// 특정 최상위 댓글에 달린 첫 10개의 응답 댓글 회수
+// 특정 최상위 댓글에 달린 첫 20개의 응답 댓글 회수
 export const getCommentsConfig = (parentId, nextPageToken) => ({
   method: "get",
   url: `${baseURL}/comments`,

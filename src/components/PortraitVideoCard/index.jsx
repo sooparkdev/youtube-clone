@@ -38,7 +38,7 @@ export default function PortraitVideoCard({ video, loading }) {
   return (
     <div
       onClick={() =>
-        navigate(`/watch?v=${videoId}`, { state: { videoData: video } })
+        navigate(`/watch?v=${videoId}`, { state: { from: 'DefaultPage', video: video } })
       }
       className={styles.wrapper}
     >

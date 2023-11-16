@@ -1,6 +1,6 @@
 import React from "react";
 import { useLocation } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { getCommentThreadsConfig } from "../utils/getYoutubeApiConfigs";
 import TopLevelCommentList from "../components/TopLevelCommentList";
 import VideoShowcase from "../components/VideoShowcase";
@@ -11,17 +11,52 @@ import NoResultsPage from "./NoResultsPage";
 import ErrorPage from "./ErrorPage";
 
 export default function VideoDetailsPage() {
-  const location = useLocation();
-  const videoFromState = location.state?.video;
-  const [video, setVideo] = useState(videoFromState);
-  const queryParams = new URLSearchParams(location.search);
-  const videoId = queryParams.get("v");
+  const { state, search } = useLocation();
+  const { video: videoFromState, from: navigatedFrom } =
+    state || {};
+    const videoId = useMemo(() => {
+      return new URLSearchParams(search).get("v");
+    }, [search]);  const [video, setVideo] = useState(videoFromState);
+  const [videoIdToFetch, setVideoIdToFetch] = useState(null);
+  const [shouldFetchChannelDetails, setShouldFetchChannelDetails] = useState(false);
+  const [channelInfoFromState, setChannelInfoFromState] = useState(null);
+
+
+  useEffect(() => {
+    let videoIdToFetch;
+    let shouldFetchChannelDetails;
+    let channelInfoFromState;
+  
+    if (navigatedFrom === "SearchPage") {
+      videoIdToFetch = videoId;
+      shouldFetchChannelDetails = false;
+      channelInfoFromState = extractChannelInfoFromState(
+        videoFromState
+      );
+    } else if (navigatedFrom === undefined) {
+      videoIdToFetch = videoId;
+      shouldFetchChannelDetails = true;
+    } else if (navigatedFrom === "DefaultPage") {
+      videoIdToFetch = null;
+      shouldFetchChannelDetails = false;
+    }
+
+    setVideoIdToFetch(videoIdToFetch);
+    setShouldFetchChannelDetails(shouldFetchChannelDetails);
+    setChannelInfoFromState(channelInfoFromState);
+  
+  }, [navigatedFrom, videoId, videoFromState]); 
+  
 
   const {
     result: videoFromFetch,
     loading: videoLoading,
     error: videoError,
-  } = useVideoDetailsPipeline(videoId);
+  } = useVideoDetailsPipeline(
+    videoIdToFetch,
+    shouldFetchChannelDetails,
+    channelInfoFromState
+  );
 
   useEffect(() => {
     if (videoFromFetch) {
@@ -80,5 +115,18 @@ export default function VideoDetailsPage() {
         error={commentsError}
       />
     </div>
+  );
+}
+
+function extractChannelInfoFromState(videoDetails) {
+  return (
+    videoDetails && [
+      {
+        channelId: videoDetails.channelId,
+        channelThumbnails: videoDetails.channelThumbnails,
+        subscriberCount: videoDetails.subscriberCount,
+        hiddenSubscriberCount: videoDetails.hiddenSubscriberCount,
+      },
+    ]
   );
 }
